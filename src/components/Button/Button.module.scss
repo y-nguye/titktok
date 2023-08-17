@@ -1,0 +1,57 @@
+.wrapper {
+    min-width: 110px;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    span {
+        font-size: 1rem;
+        font-weight: 700;
+        display: flex;
+        justify-content: space-around;
+        color: var(--text-color);
+    }
+    &:hover {
+        cursor: pointer;
+    }
+
+    + .wrapper {
+        margin-left: 16px;
+    }
+}
+
+.primary {
+    background-color: var(--primary);
+    span {
+        color: white;
+    }
+
+    &:hover {
+        background-color: var(--primary-hover);
+    }
+}
+
+.outline {
+    border: 1px solid var(--gray-color);
+    background-color: transparent;
+    span {
+        color: var(--text-color);
+    }
+    &:hover {
+        background-color: var(--gray-color);
+    }
+}
+
+.outlinePrimary {
+    border: 1px solid var(--primary);
+    background-color: transparent;
+    span {
+        color: var(--primary);
+    }
+    &:hover {
+        background-color: rgba(254, 44, 85, 0.08);
+    }
+}
+
+.fill {
+    width: 100%;
+}
