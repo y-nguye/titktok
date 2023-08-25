@@ -5,10 +5,11 @@
     width: 100%;
     height: var(--default-navbar-height);
     padding: 0 24px 0 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    position: sticky;
+    top: 0;
     box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
+    background-color: var(--white);
+    // z-index: 10;
 }
 
 .inner {
@@ -37,18 +38,21 @@
         width: 500px;
         height: 46px;
         padding: 12px 16px;
+        display: flex;
+        align-items: center;
         border-radius: 92px;
         overflow: hidden;
         border: 1px solid transparent;
         pointer-events: none;
         background-color: var(--gray-color);
 
-        form {
+        .form {
+            width: 100%;
             position: relative;
             display: flex;
             pointer-events: auto;
 
-            input {
+            .input-search {
                 font-family: 'IBM Plex Sans', sans-serif;
                 font-size: 1rem;
                 font-weight: 400;
@@ -59,24 +63,29 @@
                 background-color: transparent;
             }
 
-            input:not(:placeholder-shown) ~ button {
+            .input-search:not(:placeholder-shown) ~ .search-btn {
                 color: var(--text-color);
             }
 
             .x-circle,
             .loader-alt {
                 font-size: 1rem;
-                position: absolute;
-                right: 50px;
-                top: 2px;
+                display: flex;
+                align-items: center;
                 color: var(--gray-light-color);
             }
 
-            .x-circle {
-                visibility: visible;
+            .loader-alt-icon {
+                animation: spinner 1s linear infinite;
             }
-            .loader-alt {
-                visibility: hidden;
+
+            @keyframes spinner {
+                from {
+                    transform: rotate(0);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
             }
 
             span {
@@ -85,11 +94,12 @@
                 margin: -3px 16px;
                 background-color: #1618231f;
             }
-            button {
+            .search-btn {
                 padding: 0px 16px 0px 14px;
                 margin: -14px -16px;
                 font-size: 1.3rem;
                 line-height: 0;
+                flex: 0;
                 color: var(--gray-light-color);
                 background-color: transparent;
 
@@ -111,13 +121,4 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
-    div {
-        height: 36px;
-        font-size: 1.25rem;
-        margin-left: 16px;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-    }
 }

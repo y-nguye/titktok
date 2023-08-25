@@ -1,15 +1,56 @@
-import { FiMoreVertical, FiSearch } from 'react-icons/fi';
-import { BsFillXCircleFill, BsPlusLg } from 'react-icons/bs';
+import { useState, useEffect, useRef } from 'react';
+import { FiSearch } from 'react-icons/fi';
+import { BsFillXCircleFill } from 'react-icons/bs';
 import { BiLoaderAlt } from 'react-icons/bi';
-import { Dropdown } from 'antd';
 
 import classNames from 'classnames/bind';
 import styles from './Navbar.module.scss';
 import images from '../../../../assets/images';
-import Button from '../../../Button';
+
+import NoLoginHeader from './NoLoginHeader';
+import LoginHeader from './LoginHeader';
+import PopperSearch from '../../../PopperSearch';
 
 export default function Navbar() {
     const cx = classNames.bind(styles);
+
+    let numberNotificationInbox = 29;
+    let userLoggin = true;
+
+    const [searchValue, setSearchValue] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+    const [showSearch, setShowSearch] = useState(true);
+    const [loading, setLoading] = useState(false);
+
+    const inputRef = useRef();
+
+    useEffect(() => {
+        if (!searchValue.trim()) {
+            setSearchResult([]);
+            return;
+        }
+        setLoading(true);
+        fetch(
+            `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
+                searchValue
+            )}&type=less`
+        )
+            .then((res) => res.json())
+            .then((res) => {
+                setSearchResult(res.data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setLoading(false);
+            });
+    }, [searchValue]);
+
+    function handleClearSearch() {
+        setSearchValue('');
+        setSearchResult([]);
+        inputRef.current.focus();
+    }
+
     return (
         <nav className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -26,20 +67,48 @@ export default function Navbar() {
                     )}
                 >
                     <div className={cx('search-input-container')}>
-                        <form>
-                            <input spellCheck={false} placeholder="Tìm kiếm" />
+                        <PopperSearch
+                            searchResult={searchResult}
+                            showSearch={showSearch}
+                            setShowSearch={setShowSearch}
+                        >
+                            <form className={cx('form')}>
+                                <input
+                                    value={searchValue}
+                                    ref={inputRef}
+                                    spellCheck={false}
+                                    placeholder="Tìm kiếm"
+                                    onChange={(e) => {
+                                        setSearchValue(e.target.value);
+                                    }}
+                                    onFocus={() => setShowSearch(true)}
+                                    className={cx('input-search')}
+                                />
 
-                            <div className={cx('x-circle')}>
-                                <BsFillXCircleFill />
-                            </div>
-                            <div className={cx('loader-alt')}>
-                                <BiLoaderAlt />
-                            </div>
-                            <span class="span-spliter"></span>
-                            <button>
-                                <FiSearch />
-                            </button>
-                        </form>
+                                {!loading && searchValue && (
+                                    <button
+                                        className={cx('x-circle')}
+                                        onClick={handleClearSearch}
+                                    >
+                                        <BsFillXCircleFill />
+                                    </button>
+                                )}
+
+                                {loading && (
+                                    <div className={cx('loader-alt')}>
+                                        <BiLoaderAlt
+                                            className={cx('loader-alt-icon')}
+                                        />
+                                    </div>
+                                )}
+
+                                <span className="span-spliter"></span>
+
+                                <button className={cx('search-btn')}>
+                                    <FiSearch />
+                                </button>
+                            </form>
+                        </PopperSearch>
                     </div>
                 </div>
 
@@ -49,63 +118,15 @@ export default function Navbar() {
                         'header-container__right'
                     )}
                 >
-                    <Button outline>
-                        <BsPlusLg />
-                        Tải lên
-                    </Button>
-                    <Button primary>Đăng nhập</Button>
-                    <Dropdown
-                        menu={{
-                            items,
-                        }}
-                        trigger={['click']}
-                        placement="bottomLeft"
-                    >
-                        <div>
-                            <FiMoreVertical />
-                        </div>
-                    </Dropdown>
+                    {userLoggin ? (
+                        <LoginHeader
+                            numberNotificationInbox={numberNotificationInbox}
+                        />
+                    ) : (
+                        <NoLoginHeader />
+                    )}
                 </div>
             </div>
         </nav>
     );
 }
-
-const items = [
-    {
-        key: '1',
-        label: (
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.antgroup.com"
-            >
-                1st menu item
-            </a>
-        ),
-    },
-    {
-        key: '2',
-        label: (
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.aliyun.com"
-            >
-                2nd menu item
-            </a>
-        ),
-    },
-    {
-        key: '3',
-        label: (
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.luohanacademy.com"
-            >
-                3rd menu item
-            </a>
-        ),
-    },
-];
