@@ -13,10 +13,7 @@ export default function PopperSearch({
     children,
 }) {
     const cx = classNames.bind(styles);
-
     const handleShowSearch = () => setShowSearch(false);
-
-    console.log(searchResult.length);
 
     return (
         <Tippy
