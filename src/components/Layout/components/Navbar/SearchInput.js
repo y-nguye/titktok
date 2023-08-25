@@ -8,37 +8,31 @@ import styles from './SearchInput.module.scss';
 import PopperSearch from '../../../PopperSearch';
 import { useDebounce } from '../../../../hooks';
 
+import * as searchService from '../../../../apiServices/searchService';
+
 export default function SearchInput() {
     const cx = classNames.bind(styles);
 
+    const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [showSearch, setShowSearch] = useState(true);
-    const [searchValue, setSearchValue] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const debounce = useDebounce(searchValue, 500);
-
     const inputRef = useRef();
+    const debounce = useDebounce(searchValue, 500);
 
     useEffect(() => {
         if (!debounce.trim()) {
             setSearchResult([]);
             return;
         }
-        setLoading(true);
-        fetch(
-            `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
-                debounce
-            )}&type=less`
-        )
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.data);
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
+
+        (async () => {
+            setLoading(true);
+            const result = await searchService.search(debounce);
+            setSearchResult(result);
+            setLoading(false);
+        })();
     }, [debounce]);
 
     function handleClearSearch() {
