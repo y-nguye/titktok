@@ -17,7 +17,7 @@
         pointer-events: auto;
 
         .input-search {
-            font-family: 'IBM Plex Sans', sans-serif;
+            font-family: var(--font-family);
             font-size: 1rem;
             font-weight: 400;
             line-height: 21px;

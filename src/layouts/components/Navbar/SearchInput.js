@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
-import classNames from 'classnames/bind';
+
 import { FiSearch } from 'react-icons/fi';
 import { BsFillXCircleFill } from 'react-icons/bs';
 import { BiLoaderAlt } from 'react-icons/bi';
 
+import classNames from 'classnames/bind';
 import styles from './SearchInput.module.scss';
-import PopperSearch from '../../../PopperSearch';
-import { useDebounce } from '../../../../hooks';
+import PopperSearch from '../../../components/PopperSearch';
+import { useDebounce } from '../../../hooks';
 
-import * as searchService from '../../../../apiServices/searchService';
+import * as searchService from '../../../services/searchService';
 
 export default function SearchInput() {
     const cx = classNames.bind(styles);
@@ -35,6 +36,11 @@ export default function SearchInput() {
         })();
     }, [debounce]);
 
+    function handleChange(e) {
+        const searchValue = e.target.value;
+        if (searchValue.charAt(0) !== ' ') setSearchValue(searchValue);
+    }
+
     function handleClearSearch() {
         setSearchValue('');
         setSearchResult([]);
@@ -54,9 +60,7 @@ export default function SearchInput() {
                         ref={inputRef}
                         spellCheck={false}
                         placeholder="Tìm kiếm"
-                        onChange={(e) => {
-                            setSearchValue(e.target.value);
-                        }}
+                        onChange={(e) => handleChange(e)}
                         onFocus={() => setShowSearch(true)}
                         className={cx('input-search')}
                     />

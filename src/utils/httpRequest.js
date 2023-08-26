@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Tạo một instance Axios với cài đặt chung
 const instanceX = axios.create({
-    baseURL: 'https://tiktok.fullstack.edu.vn/api/',
+    baseURL: process.env.REACT_BASE_URL,
     timeout: 5000,
 });
 

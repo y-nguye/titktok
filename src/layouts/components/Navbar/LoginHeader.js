@@ -42,7 +42,7 @@ export default function LoginHeader({ numberNotificationInbox }) {
             >
                 <div>
                     <img
-                        src="https://scontent.fvca1-3.fna.fbcdn.net/v/t39.30808-1/345856193_627740588860690_1968665345529457682_n.jpg?stp=cp6_dst-jpg_p320x320&_nc_cat=103&ccb=1-7&_nc_sid=7206a8&_nc_ohc=lg0XggF5820AX_i2Bi_&_nc_ht=scontent.fvca1-3.fna&oh=00_AfBFJeQ0aYNJDoVNGtWxK4kFowOsLtrbxEXiJRnyeSyTOw&oe=64E36F52"
+                        src="https://scontent.fsgn2-9.fna.fbcdn.net/v/t39.30808-1/345856193_627740588860690_1968665345529457682_n.jpg?stp=cp6_dst-jpg_p320x320&_nc_cat=103&ccb=1-7&_nc_sid=7206a8&_nc_ohc=xgP6uQTeYdEAX9KEwNT&_nc_ht=scontent.fsgn2-9.fna&oh=00_AfAiKjE01P6Tk402ZRxrL50xX3WeLZShizWy80oIFAT-fQ&oe=64ED5292"
                         alt="user-avatar"
                         className={cx('user-avatar')}
                     ></img>

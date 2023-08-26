@@ -5,8 +5,9 @@ import { Dropdown } from 'antd';
 
 import styles from './NoLoginHeader.module.scss';
 
-import Button from '../../../Button';
+import Button from '../../../components/Button';
 const cx = classNames.bind(styles);
+
 export default function NoLoginHeader() {
     return (
         <div className={cx('wrapper')}>

@@ -8,6 +8,8 @@
     --black: #000;
     --text-color: #161823;
     --default-navbar-height: 60px;
+
+    --font-family: 'IBM Plex Sans', sans-serif;
 }
 
 * {
@@ -23,7 +25,7 @@ html {
 }
 
 body {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-family);
     font-size: 1rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
