@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Tạo một instance Axios với cài đặt chung
 const instanceX = axios.create({
-    baseURL: process.env.REACT_BASE_URL,
+    baseURL: process.env.REACT_APP_BASE_URL,
     timeout: 5000,
 });
 
